@@ -1,0 +1,15 @@
+{
+  "name": "file-metadata",
+  "version": "0.0.1",
+  "description": "a microservice that returns the size of an uploaded file",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Brendan Sweeny",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.13.4",
+    "multer": "^1.1.0"
+  }
+}

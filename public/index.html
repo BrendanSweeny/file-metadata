@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<head>
+    
+</head>
+<body>
+    <h1>File Metadata Microservice</h1>
+    
+    <form id="target" enctype="multipart/form-data" name="formToAnalyze" method="post" action="/api/fileanalyze">
+        <!--name must match the argument of upload.single() in the multer POST router-->
+        <input type="file" name="fileToAnalyze"/>
+        <input type="submit" value="Upload"/>
+    </form>
+    
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            
+            //ajax request URL
+            var apiURL = window.location.origin + "/api/fileanalyze";
+            
+            //form and files variables
+            var form = $("#target");
+            var files;
+            
+            //Captures file when the input file is changed
+            $("input[type='file']").change(function(event) {
+                files = event.target.files[0];
+            });
+            
+            //When submit button is pressed
+            form.on('submit', function(e) {
+                e.stopPropagation();
+                e.preventDefault();
+                
+                //A new FormData object needs to be created and cannot be created from
+                //the html form...
+                var data = new FormData();
+                
+                //Each key value pair needs to be iterated and appended to the new
+                //FormData object
+                $.each(files, function(key, value) {
+                    data.append(key, value);
+
+                });
+                
+                //For some reason, the data object always appears empty in the browser
+                console.log(data);
+                
+                //The AJAX request
+                //There seems to be an issue uploading files using multer, jQuery, and formData objects
+                //https://github.com/expressjs/multer/issues/317
+                //However, the file size is alerted appropriately
+                $.ajax({
+                    url: apiURL,
+                    type: "POST",
+                    //data sent is a FormData object
+                    data: data,
+                    //processData is false for multi-part/form data, otherwise it
+                    //will attempt to convert 'data' to a string and fail
+                    processData: false,
+                    //contentType needs to be false as well, otherwise the boundary
+                    //string in the header will be missing
+                    contentType: false,
+                    //data received is a string
+                    success: function(data) {
+                        alert("Size: " + data + " bytes");
+                    }
+                });
+            });
+            
+        });
+    </script>
+    
+</body>
