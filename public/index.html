@@ -24,24 +24,29 @@
             
             //Captures file when the input file is changed
             $("input[type='file']").change(function(event) {
-                files = event.target.files[0];
+                file = event.target.files[0];
             });
             
             //When submit button is pressed
             form.on('submit', function(e) {
                 e.stopPropagation();
+                //Prevents browser from submitting the form, allows it to be
+                //handeled with AJAX instead
                 e.preventDefault();
                 
                 //A new FormData object needs to be created and cannot be created from
                 //the html form...
                 var data = new FormData();
                 
-                //Each key value pair needs to be iterated and appended to the new
-                //FormData object
-                $.each(files, function(key, value) {
+                //Each key value pair can be iterated and appended to the new
+                //FormData object instead of uploading the file
+                $.each(file, function(key, value) {
                     data.append(key, value);
-
                 });
+                
+                
+                //This line will actually upload the file to the server:
+                //data.append("fileToAnalyze", file, file.name);
                 
                 //For some reason, the data object always appears empty in the browser
                 console.log(data);
