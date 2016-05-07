@@ -1,6 +1,6 @@
 'use strict';
 
-//max file size in bytes (5 kB)
+//max file size in bytes (500 kB)
 var maxSize = 500000;
 
 var multer = require("multer");
