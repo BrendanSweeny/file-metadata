@@ -1,5 +1,4 @@
 app/controllers/
-tmp/
 uploads/
 node_modules/
 .env

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <head>
-    
+    <title>File Metadata Microservice Test Harness</title>
 </head>
 <body>
     <h1>File Metadata Microservice</h1>
+    <p>This is a simple test harness for the file metadata API that sends a formData object containing the file via AJAX POST request</p>
     
-    <form id="target" enctype="multipart/form-data" name="formToAnalyze" method="post" action="/api/fileanalyze">
+    <form id="target" enctype="multipart/form-data" name="formToAnalyze">
         <!--name must match the argument of upload.single() in the multer POST router-->
         <input type="file" name="fileToAnalyze"/>
         <input type="submit" value="Upload"/>
@@ -15,7 +16,7 @@
     <script type="text/javascript">
         $(document).ready(function() {
             
-            //ajax request URL
+            //Ajax request URL
             var apiURL = window.location.origin + "/api/fileanalyze";
             
             //form and files variables
@@ -31,7 +32,7 @@
             form.on('submit', function(e) {
                 e.stopPropagation();
                 //Prevents browser from submitting the form, allows it to be
-                //handeled with AJAX instead
+                //handeled with ajax instead
                 e.preventDefault();
                 
                 //A new FormData object needs to be created and cannot be created from
@@ -45,16 +46,11 @@
                 });
                 
                 
-                //This line will actually upload the file to the server:
-                //data.append("fileToAnalyze", file, file.name);
+                //Uncomment this line to actually upload the file to the server
+                //and not just key/val pairs of the file's text fields:
+                data.append("fileToAnalyze", file, file.name);
                 
-                //For some reason, the data object always appears empty in the browser
-                console.log(data);
-                
-                //The AJAX request
-                //There seems to be an issue uploading files using multer, jQuery, and formData objects
-                //https://github.com/expressjs/multer/issues/317
-                //However, the file size is alerted appropriately
+                //The ajax request
                 $.ajax({
                     url: apiURL,
                     type: "POST",
@@ -67,8 +63,11 @@
                     //string in the header will be missing
                     contentType: false,
                     //data received is a string
+                    error: function(jqxhr, textStatus, errorThrown) {
+                        alert(jqxhr.responseText.slice(0, jqxhr.responseText.indexOf("<")));
+                    },
                     success: function(data) {
-                        alert("Size: " + data + " bytes");
+                        alert("Size: " + data.size + " bytes");
                     }
                 });
             });

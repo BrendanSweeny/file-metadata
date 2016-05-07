@@ -1,7 +1,7 @@
 {
   "name": "file-metadata",
   "version": "0.0.1",
-  "description": "a microservice that returns the size of an uploaded file",
+  "description": "a microservice that returns the size of an uploaded file as a browser alert",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
