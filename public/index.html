@@ -4,12 +4,12 @@
 </head>
 <body>
     <h1>File Metadata Microservice</h1>
-    <p>This is a simple test harness for the file metadata API that sends a formData object containing the file via AJAX POST request</p>
+    <p>This is a simple test harness for the file metadata API that sends a formData object containing the file via ajax POST request</p>
     
     <form id="target" enctype="multipart/form-data" name="formToAnalyze">
         <!--name must match the argument of upload.single() in the multer POST router-->
         <input type="file" name="fileToAnalyze"/>
-        <input type="submit" value="Upload"/>
+        <input type="submit" value="Submit"/>
     </form>
     
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -21,7 +21,7 @@
             
             //form and files variables
             var form = $("#target");
-            var files;
+            var file;
             
             //Captures file when the input file is changed
             $("input[type='file']").change(function(event) {
@@ -48,7 +48,7 @@
                 
                 //Uncomment this line to actually upload the file to the server
                 //and not just key/val pairs of the file's text fields:
-                data.append("fileToAnalyze", file, file.name);
+                //data.append("fileToAnalyze", file, file.name);
                 
                 //The ajax request
                 $.ajax({

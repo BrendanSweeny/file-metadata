@@ -26,11 +26,13 @@ function routes(app) {
     //Note: Upload.single() argument must match name on file input in index.html
     app.post('/api/fileanalyze', upload.single('fileToAnalyze'), function(req, res, next) {
         
+        //When file is attached to POST request
         if (req.file) {
             console.log(req.file);
             
             res.json(req.file);
-            
+        
+        //When only file text fields are attached    
         } else if (req.body) {
             console.log(req.body);
             
